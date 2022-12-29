@@ -1,4 +1,12 @@
 {
+  "name": "application",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "builddb": "node ./bin/dbloader",
+    "grade": "npm i && node ./bin/dbloader  && nodemon ./bin/www"
+  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "colors": "^1.4.0",
@@ -17,7 +25,9 @@
     "nodemailer": "^6.8.0",
     "serve-favicon": "^2.5.0",
     "sharp": "^0.31.2",
-    "socket.io": "^4.5.4",
+    "socket.io": "^4.5.4"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.20"
   }
 }
