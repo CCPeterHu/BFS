@@ -1,0 +1,127 @@
+#nav-bar {
+	/* margin: 0; */
+	padding: 10px;
+	line-height: 4.5rem;
+	color: rgba(255, 0, 255, 0.5);
+	background-image: linear-gradient(to right, #8360c3, #2ebf91);
+	border: 1px solid gold;
+	font-family: Arial;
+	font-size: xx-large;
+	border-radius: 0.5em;
+	height: 75px;
+    display: flex;
+    flex-direction: row;
+    color: black;
+    text-decoration: none;
+    list-style: none;
+}
+
+
+body {
+    margin: 0;
+    background-image: linear-gradient(to right, #FFD194, #D1913C);
+}
+
+.navbar {
+    background-color: aqua;
+    font-size: xx-large;
+    margin-left: 5px;
+    text-align: center;
+}
+
+nav a{
+    text-decoration: none;
+    border-radius: .5rem;
+    padding: .5em;
+}
+
+.post_info{
+    text-align: center;
+    color:white;
+}
+
+.post_title {
+    font-size: x-large;
+    border-radius: 8px;
+}
+
+.post_author {
+    font-size: x-large;
+    border-radius: 8px;
+}
+
+.post_time {
+    font-size: x-large;
+    border-radius: 8px;
+}
+
+#postImg{
+    max-width: 30%;
+    max-height: 30%;
+}
+
+.post-author-date{
+    display: flex;
+    flex-direction: column;
+}
+
+.author{
+    color: #2ebf91;
+    /* font-size: 30px; */
+    margin-right: 10px;
+}
+
+.author-date{
+    font-size: 20px;
+}
+
+/* add animation */
+
+.rotate {
+    animation: rotation 20s linear infinite;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(359deg);
+    }
+}
+
+.linear {
+    animation-timing-function: linear;
+}
+
+.infinite {
+    animation-iteration-count: infinite;
+}
+
+.product-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minimax(200px, 1fr));
+    grid-auto-rows: 40vh;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+}
+
+input#form-comment-text{
+    font-size: x-large;
+    border: 2px solid black;
+}
+
+#form-submit-comment{
+    font-size: medium;
+}
+
+.comments{
+    font-size: x-large;
+    height: 4rem;
+}
+
+.comment-date{
+	margin-left: 16rem;
+}

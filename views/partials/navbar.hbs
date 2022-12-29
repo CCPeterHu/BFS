@@ -1,0 +1,53 @@
+{{!-- {{log this}} --}}
+<header id="header">
+    <div class="page-banner-icon">
+        <i class="fa fa-camera-retro" aria-hidden="false"></i>
+    </div>
+    {{!-- <span class="page-banner-text"> Dreacast </span> --}}
+</header>
+<div id="sidebartoggle" class="open-sidebar hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<nav id="nav-bar" class="nav-bar">
+    {{!-- <ul> --}}
+        {{!-- <li id="side-bar-close" class="side-bar-close"> #x2716;</li> --}}
+        {{#if isLoggedIn}}
+        <li>
+            <a style="color: white;">Hi, {{uname}} </a>
+        </li>
+        {{/if}}
+        <li>
+            <a class="nav-items" href="/"> Index</a>
+        </li>
+
+        <li>
+            <a class="nav-items" href="/postimage"> Post </a>
+        </li>
+
+        {{#if isLoggedIn}}
+        <li>
+            <a class="nav-items" id="logout-button" href="#">Log out</a>
+        </li>
+        {{else}}
+        <li>
+            <a class="nav-items" href="/login"> Login </a>
+        </li>
+        {{/if}}
+
+        <li>
+            <a class="nav-items" href="/order"> Order </a>
+        </li>
+
+        <li>
+            <a class="nav-items" href="#"> Contact </a>
+        </li>
+
+        <li class="search-bar">
+            <form action="/posts/search" method="GET" enctype="application/x-www-form-urlencoded">
+            <input id="search-text" class="search-text" placeholder="search here" name="searchTerm" type="text" value="{{searchValue}}">
+            <button class="search-button" type="submit" > Search</button>
+            </form>
+        </li>
+</nav>

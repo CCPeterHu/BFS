@@ -1,0 +1,87 @@
+<script src="/socket.io/socket.io.js"></script>
+<div class="post_info">
+    {{!-- {{log this}} --}}
+    <div class="post_title">
+        <h2 class="post-title">{{currentPost.title}}</h1>
+            <p class="post-description">{{currentPost.description}}</p>
+    </div>
+
+    <div class="post-author-date">
+        <p class="author-date"><strong class="author">{{currentPost.uname}}</strong> {{formateDate
+            currentPost.createdAT}}</p>
+    </div>
+
+    <div style="text-align: center;">
+        <img src='/{{currentPost.image}}' alt="" id="postImg" class="">
+    </div>
+
+    {{!-- <form action="/comments/create" enctype="application/x-www-form-urlencoded" method="POST"> --}}
+        <input type="text" id="form-comment-text" placeholder="comment here" required>
+        <button type="submit" id="form-submit-comment" data-postid="{{postID}}" class="submit">
+            Comment
+        </button>
+        {{!--
+    </form> --}}
+
+    <div id="comment-list">
+        {{#each currentPost.comments}}
+        {{> comment this}}
+        {{/each}}
+    </div>
+
+</div>
+
+<script>
+    const socket = io();
+    socket.on('comments-update', (commentsObjs)=>{
+        addNewComment(commentsObjs);
+    });
+    
+    function addNewComment(commentsObjs) {
+        //console.log(commentsObjs);
+        let commentList = document.getElementById('comment-list');
+        let newComment = document.createElement('template');
+        newComment.innerHTML = `
+        <div class="comments">
+            <div class="comment">
+            <strong class="comment-author">@${commentsObjs.data.uname} </strong>
+            <span class="comment-date"> ${commentsObjs.data.createAt}</span>
+            <div class="comment-text">${commentsObjs.data.comment}</div>
+            </div>
+        </div>
+        `;
+
+        commentList.append(newComment.content);
+    }
+
+    document.getElementById('form-submit-comment').addEventListener('click', function (ev) {
+        ev.preventDefault();
+
+        let commentTextElement = document.getElementById('form-comment-text');
+        let commentText = commentTextElement.value;
+        let postId = ev.currentTarget.dataset.postid; //line 20
+        //console.log('------>', ev.currentTarget.dataset);
+        if (!commentText) return;
+
+        fetch('/comments/create', {
+            method: "POST",
+            headers: {
+                "Content-Type": "Application/json"
+            },
+
+            body: JSON.stringify({
+                commentText: commentText,
+                postId: postId
+            })
+        })
+            .then(response => {
+                
+            return response.json();
+            })
+            .then(commentsObjs => {
+                socket.emit('comments-event', commentsObjs);
+            })
+            .catch(err => console.log(err));
+    })
+
+</script>

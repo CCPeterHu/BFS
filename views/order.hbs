@@ -1,0 +1,64 @@
+<div class="order">
+    <H1 class="order-form">Order Form</H1>
+    <form method="POST" action="/order/create" id="order-form" name="order-form" enctype="multipart/form-data">
+        <strong>User Information:</strong>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <label for="address">Address:</label>
+        <input id="address" name="address"></input>
+        <label for="number">Number:</label>
+        <input id="number" name="number"></input>
+        {{!-- filter dimentions --}}
+        <strong>Dimentions:</strong>
+        <!-- Label with dimensions 20 x 16 -->
+        <div class="dimensions 20x16" id="dimensions 20x16">
+            <label>20x16</label>
+            <label for="20x16-quantity">Quantity:</label>
+            <input type="number" id="20x16-quantity" name="quantity20x16" min="0" max="100" step="1">
+            <select id="20x16-material" name="material20x16">
+                <option value="stainless-steel">Stainless Steel</option>
+                <option value="stainless-steel">Stainless Steel with Hook</option>
+                <option value="metal">Metal</option>
+            </select>
+        </div>
+
+        <!-- Label with dimensions 20 x 20 -->
+        <div class="dimensions 20x20" id="dimensions 20x20">
+            <label>20x20</label>
+            <label for="20x20-quantity">Quantity:</label>
+            <input type="number" id="20x20-quantity" name="quantity20x20" min="0" max="100" step="1">
+            <select id="20x20-material" name="material20x20">
+                <option value="stainless-steel">Stainless Steel</option>
+                <option value="stainless-steel">Stainless Steel with Hook</option>
+                <option value="metal">Metal</option>
+            </select>
+        </div>
+
+        <!-- Label with dimensions 16 x 20 -->
+        <div class="dimensions 16x20" id="dimensions 16x20">
+            <label>16x20</label>
+            <label for="16x20-quantity">Quantity:</label>
+            <input type="number" id="16x20-quantity" name="quantity16x20" min="0" max="100" step="1">
+            <select id="16x20-material" name="material16x20">
+                <option value="stainless-steel">Stainless Steel</option>
+                <option value="stainless-steel">Stainless Steel with Hook</option>
+                <option value="metal">Metal</option>
+            </select>
+        </div>
+
+        <label for="note">Note:</label>
+        <textarea id="note" name="note"
+            placeholder="Please note the special dimentions here or you can jot down any comment." rows="4"
+            cols="50"></textarea>
+        <strong>If you don't know your dimentions, please contact: 415-713-5115,<br> 
+        or update an image of your filters here.</strong>
+        <input type="file" class="image" name="uploadImage" required>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+{{!-- send email via server --}}
+<script>
+
+
+</script>

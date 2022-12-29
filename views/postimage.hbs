@@ -1,0 +1,14 @@
+<section class="post_section">
+    <form action="/posts/create" method="POST" class="postimg_form" enctype="multipart/form-data">
+        <label for="title">Post title:</label>
+        <input type="text" name="title" class="title" placeholder="Please input a tilte here." required>
+        <label for="discription">Post discription:</label>
+        <input type="text" name="description" class="discription" placeholder="Please input a discription here." required>
+        <div>
+            <input type="checkbox" required> 
+            <a href="https://www.google.com"> Acceptable Use Policy </a>
+        </div>
+        <input type="file" class="image" name="uploadImage" required>
+        <input type="submit" class="sub_image" value="Submit">
+    </form>
+</section>

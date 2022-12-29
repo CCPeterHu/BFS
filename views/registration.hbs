@@ -1,0 +1,65 @@
+<section>
+    <form method="POST" action="/users/register" class="register" enctype="application/x-www-form-urlencoded">
+        <H1 class="registration-form">Registration Form</H1>
+        <div>
+            <!-- username -->
+            <label for="uname" id="uname_lable">Username: </label>
+            <input type="text" id="uname" name="uname" placeholder="Please type username here." pattern="^[a-zA-z].{2,}"
+                required>
+            <div id="message">
+                <p id="uname_letter" class="invalid">Must start with a <b>charactor.</b> </p>
+                <p id="uname_length" class="invalid">Minumum <b>3</b> charactors.</p>
+            </div>
+        </div>
+        <!-- email -->
+        <div>
+            <label for="email" class="email_lable">Email:</label>
+            <input type="email" class="email" id="email" name="email" placeholder="Please type email here." required>
+        </div>
+
+        <div>
+            <!-- password -->
+            <label for="password" class="pwd_lable">Password:</label>
+            <input type="password" class="password" id="password" name="pwd" value="Pizza@163"
+                placeholder="Please type password here." required>
+            <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\/\*\-\+\!\@\#\$\^\&\~\[\]]).{8,}" -->
+            <div id="message_pwd">
+                <p id="pwd_length" class="invalid">Password contains at least <b>8</b> charactors.</p>
+                <p id="pwd_uppercase" class="invalid">Password contains at least <b>1</b> uppercase.</p>
+                <p id="pwd_lowercase" class="invalid">Password contains at least <b>1</b> lowercase.</p>
+                <p id="pwd_numbers" class="invalid">Password contains at least <b>1</b> number. </p>
+                <p id="pwd_special_charactor" class="invalid">Password contains at least <b>1</b> special characters
+                    ('/*-+!@#$^&~[]').</p>
+                </p>
+            </div>
+        </div>
+
+        <div>
+            <!-- Comfirm password -->
+            <label for="cpassowrd" class="cpwd_lable">Comfirm Password:</label>
+            <input type="password" class="cpassword" id="cpassowrd" name="cpwd" value="Pizza@163"
+                placeholder="Please confirm password here." required>
+            <div id="message_cpwd">
+                <p id="cpwd_match" class="invalid">Comfirm password does match.</p>
+            </div>
+        </div>
+
+        <div>
+            <!-- age checkbox -->
+            <div style="display: flex; flex-flow: row;">
+                <input type="checkbox" id="age" required>
+                <label for="age" id="age_lable">I am older than 13.</label>
+            </div>
+            <!-- policy checkbox -->
+            <div style="display: flex; flex-flow: row;">
+                <input type="checkbox" id="policy" required> </p>
+                <a href="https://www.google.com">TOS and Privacy Rules</a>
+            </div>
+        </div>
+        <div id="regis-buttons" class="regis-buttons"> 
+            {{!-- buttons --}}
+        <input type="submit" class="submit" value="Submit" onclick="submit">
+        <input type="reset" class="reset" value="Reset">
+        </div>
+    </form>
+</section>

@@ -1,0 +1,39 @@
+{{!-- {{log this}} --}}
+
+<head>
+  <title>{{title}}</title>
+  <link rel="icon" href="/public/favicon.ico" sizes="70x70" type="image/ico">
+  {{#each css}}
+  <link rel="stylesheet" type="text/css" href="/public/css/{{this}}" media="screen" />
+  {{/each}}
+
+  {{#each js}}
+  <script defer src="/public/js/{{this}}"></script>
+  {{/each}}
+</head>
+
+<body>
+  <div id="container">
+    {{> navbar}}
+    {{#if (nonEmptyObj messages)}}
+    {{> flashmessage}}
+    {{/if}}
+    {{{body}}}
+  </div>
+</body>
+
+{{#if isLoggedIn}}
+<script>
+  document.getElementById('logout-button')
+    .addEventListener('click', function (ev) {
+      console.log('-----> client doing log out');
+      fetch('/users/logout', { method: "POST" })
+        .then(response => response.json())
+        .then(function (res_json) {
+          console.log(res_json);
+          window.location.replace('/');
+        })
+        .catch(err => console.log(err))
+    })
+</script>
+{{/if}}

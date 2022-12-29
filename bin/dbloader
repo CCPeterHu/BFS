@@ -1,0 +1,146 @@
+"use strict";
+const mysql = require("mysql2/promise");
+
+function displayWarningMessage(warning) {
+  switch (warning.Code) {
+    case 1007:
+      console.log(`Skipping Database Creation --> ${warning.Message}`);
+      break;
+    case 1050:
+      console.log(`Skipping Table Creation --> ${warning.Message}`);
+      break;
+  }
+}
+
+async function getConnection() {
+  return await mysql.createConnection({
+    host: "127.0.0.1",
+    //TODO make sure to change to the user you want to use
+    user: "root", //Your DB username
+    //TODO make sure to change to the correct password for your user.
+    password: "Pizza@163", //Your DB password
+  });
+}
+
+async function makeDatabase(connection) {
+  //TODO make sure to change yourdbnamehere
+  // name of my db is 'mydb'
+  const [result, _] = await connection.query(
+    "CREATE DATABASE IF NOT EXISTS mydb;"
+  );
+  if (result && result.warningStatus > 0) {
+    const [warningResult, _] = await connection.query("SHOW WARNINGS");
+    displayWarningMessage(warningResult[0]);
+  } else {
+    console.log("Created Database!");
+  }
+}
+
+async function makeUsersTable(connection) {
+  const [result, _] = await connection.query(
+    // Users Table SQL Goes here
+    `
+   CREATE TABLE IF NOT EXISTS mydb.user (
+    uid INT NOT NULL AUTO_INCREMENT,
+    pwd VARCHAR(255) NOT NULL,
+    uname VARCHAR(65) NOT NULL,
+    email VARCHAR(128) NOT NULL,
+    createdAT DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (uid),
+    UNIQUE INDEX uname_UNIQUE (uname ASC) VISIBLE,
+    UNIQUE INDEX email_UNIQUE (email ASC) VISIBLE)
+  ENGINE = InnoDB
+    `
+  );
+
+  if (result && result.warningStatus > 0) {
+    const [warningResult, _] = await connection.query("SHOW WARNINGS");
+    displayWarningMessage(warningResult[0]);
+  } else {
+    console.log("Created Users Table!");
+  }
+}
+
+async function makePostsTable(connection) {
+  const [result, _] = await connection.query(
+    // Posts Table SQL Goes here
+    `
+    CREATE TABLE IF NOT EXISTS mydb.posts (
+      post_id INT NOT NULL AUTO_INCREMENT,
+      title VARCHAR(45) NOT NULL,
+      description TEXT NOT NULL,
+      image VARCHAR(4096) NOT NULL,
+      thumbnail VARCHAR(4096) NOT NULL,
+      fk_user_id INT NOT NULL,
+      createdAT DATETIME NOT NULL DEFAULT current_timestamp,
+      PRIMARY KEY (post_id),
+      INDEX fk_user_id_idx (fk_user_id ASC) VISIBLE,
+      CONSTRAINT fk_user_id
+        FOREIGN KEY (fk_user_id)
+        REFERENCES mydb.user (uid)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE)
+    ENGINE = InnoDB
+    `
+  );
+  if (result && result.warningStatus > 0) {
+    const [warningResult, _] = await connection.query("SHOW WARNINGS");
+    displayWarningMessage(warningResult[0]);
+  } else {
+    console.log("Created Posts Table!");
+  }
+}
+
+async function makeCommentsTable(connection) {
+  const [result, _] = await connection.query(
+    // Comments Table SQL Goes here
+    `
+    CREATE TABLE IF NOT EXISTS mydb.comments (
+      id INT NOT NULL AUTO_INCREMENT,
+      fk_post_id INT NOT NULL,
+      fk_user_id INT NOT NULL,
+      text VARCHAR(45) NOT NULL,
+      createAt DATETIME NOT NULL DEFAULT current_timestamp,
+      PRIMARY KEY (id),
+      INDEX fk_post_id_idx (fk_post_id ASC) VISIBLE,
+      INDEX fk_user_id_idx (fk_user_id ASC) VISIBLE,
+      CONSTRAINT fk_post_id
+        FOREIGN KEY (fk_post_id)
+        REFERENCES mydb.posts (post_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+      CONSTRAINT fk_post_user_id
+        FOREIGN KEY (fk_user_id)
+        REFERENCES mydb.user (uid)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE)
+    ENGINE = InnoDB
+    `
+  );
+  if (result && result.warningStatus > 0) {
+    const [warningResult, _] = await connection.query("SHOW WARNINGS");
+    displayWarningMessage(warningResult[0]);
+  } else {
+    console.log("Created Comments Table!");
+  }
+}
+
+(async function main() {
+  let connection = null;
+  try {
+    connection = await getConnection();
+    await makeDatabase(connection); // make DB
+    //TODO make sure to change yourdbnamehere
+    await connection.query("USE mydb"); // set new DB to the current DB
+    await makeUsersTable(connection); // try to make user table
+    await makePostsTable(connection); // try to make posts table
+    await makeCommentsTable(connection); // try to make comments table
+    connection.close();
+    return;
+  } catch (error) {
+    console.error(error);
+    if (connection != null) {
+      connection.close();
+    }
+  }
+})();
